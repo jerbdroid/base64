@@ -32,13 +32,17 @@ cmake(
         "CMAKE_C_FLAGS": "-Wno-implicit-int-conversion -Wno-switch-default -Wno-implicit-fallthrough -Wno-missing-prototypes -Wno-unsafe-buffer-usage -Wno-cast-align -Wno-declaration-after-statement -Wno-undef -Wno-builtin-macro-redefined -Wno-cast-qual -Wno-shadow -Wno-sign-conversion -Wno-extra-semi-stmt -Wno-reserved-macro-identifier -Wno-shift-sign-overflow -Wno-uninitialized",
         "CMAKE_CXX_FLAGS": "-Wno-implicit-int-conversion -Wno-switch-default -Wno-implicit-fallthrough -Wno-missing-prototypes -Wno-unsafe-buffer-usage -Wno-cast-align -Wno-declaration-after-statement -Wno-undef -Wno-builtin-macro-redefined -Wno-cast-qual -Wno-shadow -Wno-sign-conversion -Wno-extra-semi-stmt -Wno-reserved-macro-identifier -Wno-shift-sign-overflow -Wno-uninitialized",
     },
+    defines = ["BASE64_STATIC_DEFINE"],
     lib_source = ":all_srcs",
     out_static_libs = select({
         ":opt_build": [
+            "base64.lib",
         ],
         ":fast_build": [
+            "base64.lib",
         ],
         ":dbg_build": [
+            "base64.lib",
         ],
     }),
 )
