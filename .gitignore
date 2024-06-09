@@ -10,3 +10,5 @@ test/test_base64
 out/
 # private cmake presets
 CMakeUserPresets.json
+
+MODULE.bazel.lock
