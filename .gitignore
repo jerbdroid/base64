@@ -12,3 +12,7 @@ out/
 CMakeUserPresets.json
 
 MODULE.bazel.lock
+
+build
+build-debug
+install

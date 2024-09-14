@@ -10,7 +10,7 @@
 #     http://creativecommons.org/publicdomain/zero/1.0/
 #
 ########################################################################
-cmake_minimum_required(VERSION 3.10.2)
+cmake_minimum_required(VERSION 3.23)
 
 # new dependent option syntax. We are already compliant
 if (POLICY CMP0127)
@@ -24,6 +24,15 @@ include(CMakeDependentOption)
 include(CheckIncludeFile)
 include(FeatureSummary)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules")
+
+option(BASE64_MSVC_STATIC_RUNTIME
+  "Link static runtime libraries"
+  ON)
+if( BASE64_MSVC_STATIC_RUNTIME)
+  set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+else()
+  set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
+endif()
 
 #######################################################################
 # platform detection
@@ -148,6 +157,8 @@ set_target_properties(base64 PROPERTIES
 #generate_export_header(base64)
 # the following definitions and those in libbase64.h have been
 # kept forward compatible in case we ever switch to generate_export_header
+
+set(BUILD_SHARED_LIBS OFF)
 if (BUILD_SHARED_LIBS)
     set_target_properties(base64 PROPERTIES
         C_VISIBILITY_PRESET hidden
@@ -290,6 +301,15 @@ install(EXPORT base64-targets
     NAMESPACE aklomp::
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
 )
+
+option(BASE64_MSVC_STATIC_RUNTIME
+  "Link static runtime libraries"
+  ON)
+if( BASE64_MSVC_STATIC_RUNTIME)
+  set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+else()
+  set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
+endif()
 
 ########################################################################
 feature_summary(WHAT PACKAGES_FOUND PACKAGES_NOT_FOUND ENABLED_FEATURES DISABLED_FEATURES)
